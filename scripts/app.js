@@ -350,12 +350,14 @@ function onStoryClick(details) {
 
     storyStart += count;
 
+    requestAnimationFrame(loadStoryBatch);
+
   }
 
   // Bootstrap in the stories.
   APP.Data.getTopStories(function(data) {
     stories = data;
-    loadStoryBatch();
+    requestAnimationFrame(loadStoryBatch);
     main.classList.remove('loading');
   });
 
