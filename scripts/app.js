@@ -55,7 +55,7 @@ APP.Main = (function() {
   var storyDetailsCommentTemplate =
       Handlebars.compile(tmplStoryDetailsComment);
 
-  /**
+      /**
    * As every single story arrives in shove its
    * content in at that exact moment. Feels like something
    * that should really be handled more delicately, and
@@ -65,14 +65,14 @@ APP.Main = (function() {
 
     // This seems odd. Surely we could just select the story
     // directly rather than looping through all of them.
-    var storyElements = document.querySelectorAll('.story');
+    var story = document.querySelector('.story#s' + key);
 
-    for (var i = 0; i < storyElements.length; i++) {
+    //for (var i = 0; i < storyElements.length; i++) {
 
-      if (storyElements[i].getAttribute('id') === 's-' + key) {
+      //if (storyElements[i].getAttribute('id') === 's-' + key) {
 
         details.time *= 1000;
-        var story = storyElements[i];
+        //var story = storyElements[i];
         var html = storyTemplate(details);
         story.innerHTML = html;
         story.addEventListener('click', onStoryClick.bind(this, details));
@@ -82,14 +82,13 @@ APP.Main = (function() {
         storyLoadCount--;
 
       }
-    }
 
     // Colorize on complete.
-    if (storyLoadCount === 0)
-      colorizeAndScaleStories();
-  }
+    //if (storyLoadCount === 0)
+      //colorizeAndScaleStories();
+  //}
 
-  function onStoryClick(details) {
+function onStoryClick(details) {
 
     var storyDetails = $('sd-' + details.id);
 
