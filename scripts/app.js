@@ -90,17 +90,17 @@ APP.Main = (function() {
 
 function onStoryClick(details) {
 
-    var storyDetails = $('sd-' + details.id);
+    //var storyDetails = $('sd-' + details.id);
 
     // Wait a little time then show the story details.
-    requestAnimationFrame(showStory.bind(this, details.id), 60);
+    //requestAnimationFrame(showStory.bind(this, details.id), 60);
 
     // Create and append the story. A visual change...
     // perhaps that should be in a requestAnimationFrame?
     // And maybe, since they're all the same, I don't
     // need to make a new element every single time? I mean,
     // it inflates the DOM and I can only see one at once.
-    if (!storyDetails) {
+    //if (!storyDetails) {
 
       if (details.url)
         details.urlobj = new URL(details.url);
@@ -116,12 +116,12 @@ function onStoryClick(details) {
         by: '', text: 'Loading comment...'
       });
 
-      storyDetails = document.createElement('section');
+      // do not want to create an element storyDetails = document.createElement('section');
       storyDetails.setAttribute('id', 'sd-' + details.id);
-      storyDetails.classList.add('story-details');
+      //class not needed storyDetails.classList.add('story-details');
       storyDetails.innerHTML = storyDetailsHtml;
 
-      document.body.appendChild(storyDetails);
+      //eliminated story details document.body.appendChild(storyDetails);
 
       commentsElement = storyDetails.querySelector('.js-comments');
       storyHeader = storyDetails.querySelector('.js-header');
@@ -156,8 +156,8 @@ function onStoryClick(details) {
               localeData);
         });
       }
-    }
 
+    showStory(details.id);
   }
 
   function showStory(id) {
