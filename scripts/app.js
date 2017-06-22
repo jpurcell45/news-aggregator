@@ -251,7 +251,7 @@ function onStoryClick(details) {
    * Does this really add anything? Can we do this kind
    * of work in a cheaper way?
    */
-  function colorizeAndScaleStories() {
+  /**function colorizeAndScaleStories() {
 
     var storyElements = document.querySelectorAll('.story');
 
@@ -283,7 +283,7 @@ function onStoryClick(details) {
       title.style.opacity = opacity;
     }
   }
-
+**/
   //this is just useless code main.addEventListener('touchstart', function(evt) {
 
     // I just wanted to test what happens if touchstart
