@@ -284,15 +284,14 @@ function onStoryClick(details) {
     }
   }
 
-  main.addEventListener('touchstart', function(evt) {
+  //this is just useless code main.addEventListener('touchstart', function(evt) {
 
     // I just wanted to test what happens if touchstart
     // gets canceled. Hope it doesn't block scrolling on mobiles...
-    if (Math.random() > 0.97) {
-      evt.preventDefault();
-    }
+    // more useless code if (Math.random() > 0.97) {
+      //evt.preventDefault();
+    //}
 
-  });
 
   main.addEventListener('scroll', function() {
 
