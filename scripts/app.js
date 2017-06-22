@@ -54,7 +54,9 @@ APP.Main = (function() {
       Handlebars.compile(tmplStoryDetails);
   var storyDetailsCommentTemplate =
       Handlebars.compile(tmplStoryDetailsComment);
-
+  var storyDetails = document.createElement('section');
+  storyDetails.classList.add('story-details');
+  document.body.appendChild(storyDetails);
       /**
    * As every single story arrives in shove its
    * content in at that exact moment. Feels like something
