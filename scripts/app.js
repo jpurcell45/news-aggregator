@@ -72,17 +72,14 @@ APP.Main = (function() {
     //for (var i = 0; i < storyElements.length; i++) {
 
       //if (storyElements[i].getAttribute('id') === 's-' + key) {
-
         details.time *= 1000;
         //var story = storyElements[i];
         var html = storyTemplate(details);
         story.innerHTML = html;
         story.addEventListener('click', onStoryClick.bind(this, details));
         story.classList.add('clickable');
-
         // Tick down. When zero we can batch in the next load.
         storyLoadCount--;
-
       }
 
     // Colorize on complete.
@@ -163,21 +160,26 @@ function onStoryClick(details) {
   }
 
   function showStory(id) {
-
-    if (inDetails)
-      return;
-
-    inDetails = true;
-
-    var storyDetails = $('#sd-' + id);
-    var left = null;
-
     if (!storyDetails)
       return;
+      storyDetails.classList.add('visible');
+      storyDetails.classList.remove('hidden');
+    }
+    function hideStory(id) {
+      storyDetails.classList.add('hidden');
+      storyDetails.classList.remove('visible');
+    }
+    //inDetails = true;
 
-    document.body.classList.add('details-active');
-    storyDetails.style.opacity = 1;
+    //var storyDetails = $('#sd-' + id);
+    //var left = null;
 
+    //if (!storyDetails)
+      //return;
+
+    //document.body.classList.add('details-active');
+    //storyDetails.style.opacity = 1;
+/**
     function animate () {
 
       // Find out where it currently is.
@@ -248,7 +250,7 @@ function onStoryClick(details) {
     // and they should be in a requestAnimationFrame
     setTimeout(animate, 4);
   }
-
+**/
   /**
    * Does this really add anything? Can we do this kind
    * of work in a cheaper way?
