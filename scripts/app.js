@@ -75,7 +75,7 @@ APP.Main = (function() {
         details.time *= 1000;
         //var story = storyElements[i];
         var html = storyTemplate(details);
-        story.innerHTML = html;
+        story.innerHTML = 'html';
         story.addEventListener('click', onStoryClick.bind(this, details));
         story.classList.add('clickable');
         // Tick down. When zero we can batch in the next load.
