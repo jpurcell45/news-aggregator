@@ -88,20 +88,9 @@ APP.Main = (function() {
   //}
 
 function onStoryClick(details) {
-
-    //var storyDetails = $('sd-' + details.id);
-
     // Wait a little time then show the story details.
     setTimeout(showStory, 60);
     //requestAnimationFrame(showStory.bind(this, details.id), 60);
-
-    // Create and append the story. A visual change...
-    // perhaps that should be in a requestAnimationFrame?
-    // And maybe, since they're all the same, I don't
-    // need to make a new element every single time? I mean,
-    // it inflates the DOM and I can only see one at once.
-    //if (!storyDetails) {
-
       if (details.url)
         details.urlobj = new URL(details.url);
 
@@ -113,16 +102,6 @@ function onStoryClick(details) {
       var storyDetailsHtml = storyDetailsTemplate(details);
       var kids = details.kids;
       storyDetails.innerHTML = storyDetailsHtml;
-      //var commentHtml = storyDetailsCommentTemplate({
-        //by: '', text: 'Loading comment...'
-      //});
-
-      // do not want to create an element storyDetails = document.createElement('section');
-      //storyDetails.setAttribute('id', 'sd-' + details.id);
-      //class not needed storyDetails.classList.add('story-details');
-
-
-      //eliminated story details document.body.appendChild(storyDetails);
 
       commentsElement = storyDetails.querySelector('.js-comments');
       storyHeader = storyDetails.querySelector('.js-header');
@@ -137,20 +116,21 @@ function onStoryClick(details) {
       if (typeof kids === 'undefined')
         return;
 
+      var commentTemplateElement = document.createElement('aside');
+      commentTemplateElement.classList.add('story-details__comment');
+      commentTemplateElement.innerHTML = commentTemplateHtml;
+
       for (var k = 0; k < kids.length; k++) {
 
         var comment = commentTemplateElement.cloneNode(true);
-        //comment = document.createElement('aside');
         comment.setAttribute('id', 'sdc-' + kids[k]);
-        //comment.classList.add('story-details__comment');
-        //comment.innerHTML = commentHtml;
-        //commentsElement.appendChild(comment);
+
         requestAnimationFrame(function(commentsElement, comment) {
           return function() {
             commentsElement.appendChild(comment);
           };
         }(commentsElement, comment));
-        // Update the comment with the live data.
+
         APP.Data.getStoryComment(kids[k], function(comment) {
           return function (commentDetails) {
 
