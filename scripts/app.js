@@ -92,6 +92,7 @@ function onStoryClick(details) {
     //var storyDetails = $('sd-' + details.id);
 
     // Wait a little time then show the story details.
+    setTimeout(showStory, 60);
     //requestAnimationFrame(showStory.bind(this, details.id), 60);
 
     // Create and append the story. A visual change...
@@ -104,21 +105,22 @@ function onStoryClick(details) {
       if (details.url)
         details.urlobj = new URL(details.url);
 
-      var comment;
+      //var comment;
       var commentsElement;
       var storyHeader;
       var storyContent;
 
       var storyDetailsHtml = storyDetailsTemplate(details);
       var kids = details.kids;
-      var commentHtml = storyDetailsCommentTemplate({
-        by: '', text: 'Loading comment...'
-      });
+      storyDetails.innerHTML = storyDetailsHtml;
+      //var commentHtml = storyDetailsCommentTemplate({
+        //by: '', text: 'Loading comment...'
+      //});
 
       // do not want to create an element storyDetails = document.createElement('section');
-      storyDetails.setAttribute('id', 'sd-' + details.id);
+      //storyDetails.setAttribute('id', 'sd-' + details.id);
       //class not needed storyDetails.classList.add('story-details');
-      storyDetails.innerHTML = storyDetailsHtml;
+
 
       //eliminated story details document.body.appendChild(storyDetails);
 
@@ -127,7 +129,7 @@ function onStoryClick(details) {
       storyContent = storyDetails.querySelector('.js-content');
 
       var closeButton = storyDetails.querySelector('.js-close');
-      closeButton.addEventListener('click', hideStory.bind(this, details.id));
+      closeButton.addEventListener('click', hideStory);
 
       var headerHeight = storyHeader.getBoundingClientRect().height;
       storyContent.style.paddingTop = headerHeight + 'px';
@@ -137,27 +139,34 @@ function onStoryClick(details) {
 
       for (var k = 0; k < kids.length; k++) {
 
-        comment = document.createElement('aside');
+        var comment = commentTemplateElement.cloneNode(true);
+        //comment = document.createElement('aside');
         comment.setAttribute('id', 'sdc-' + kids[k]);
-        comment.classList.add('story-details__comment');
-        comment.innerHTML = commentHtml;
-        commentsElement.appendChild(comment);
-
+        //comment.classList.add('story-details__comment');
+        //comment.innerHTML = commentHtml;
+        //commentsElement.appendChild(comment);
+        requestAnimationFrame(function(commentsElement, comment) {
+          return function() {
+            commentsElement.appendChild(comment);
+          };
+        }(commentsElement, comment));
         // Update the comment with the live data.
-        APP.Data.getStoryComment(kids[k], function(commentDetails) {
+        APP.Data.getStoryComment(kids[k], function(comment) {
+          return function (commentDetails) {
 
           commentDetails.time *= 1000;
 
-          var comment = commentsElement.querySelector(
-              '#sdc-' + commentDetails.id);
-          comment.innerHTML = storyDetailsCommentTemplate(
+          var commentInnerHTML = storyDetailsCommentTemplate(
               commentDetails,
-              localeData);
-        });
-      }
+              localeData
+            );
 
-    showStory(details.id);
-  }
+            requestAnimationFrame(function() {
+              comment.innerHTML = commentInnerHTML;
+            });
+          };}(comment));
+        }
+      }
 
   function showStory(id) {
     if (!storyDetails)
