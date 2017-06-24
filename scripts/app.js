@@ -67,8 +67,8 @@ APP.Main = (function() {
 
     // This seems odd. Surely we could just select the story
     // directly rather than looping through all of them.
-    var story = document.querySelector('.story#s' + key);
-
+    //var story = document.querySelector('.story#s' + key);
+    var story = document.getElementById('s-' + key);
     //for (var i = 0; i < storyElements.length; i++) {
 
       //if (storyElements[i].getAttribute('id') === 's-' + key) {
