@@ -32,7 +32,7 @@ APP.Main = (function() {
       }
     }
   };
-
+  var storyDetails = $('#storyDetails');
   var tmplStory = $('#tmpl-story').textContent;
   var tmplStoryDetails = $('#tmpl-story-details').textContent;
   var tmplStoryDetailsComment = $('#tmpl-story-details-comment').textContent;
@@ -54,15 +54,17 @@ APP.Main = (function() {
       Handlebars.compile(tmplStoryDetails);
   var storyDetailsCommentTemplate =
       Handlebars.compile(tmplStoryDetailsComment);
-  var storyDetails = document.createElement('section');
-  storyDetails.classList.add('story-details');
-  document.body.appendChild(storyDetails);
-      /**
-   * As every single story arrives in shove its
-   * content in at that exact moment. Feels like something
-   * that should really be handled more delicately, and
-   * probably in a requestAnimationFrame callback.
-   */
+  var storyTemplateHtml = storyTemplate({
+    title: '...',
+    score: '-',
+    by: '...',
+    time: 0
+  });
+
+  var commentTemplateHtml = storyDetailsCommentTemplate({
+    by: '', text: 'Loading comment...'
+  });
+
   function onStoryData (key, details) {
 
     // This seems odd. Surely we could just select the story
