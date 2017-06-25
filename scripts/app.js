@@ -32,7 +32,7 @@ APP.Main = (function() {
       }
     }
   };
-  var storyDetails = $('#story-details');
+  //var storyDetails = $('#story-details');
   var tmplStory = $('#tmpl-story').textContent;
   var tmplStoryDetails = $('#tmpl-story-details').textContent;
   var tmplStoryDetailsComment = $('#tmpl-story-details-comment').textContent;
@@ -47,6 +47,9 @@ APP.Main = (function() {
     tmplStoryDetails = tmplStoryDetails.replace(intlRelative, '');
     tmplStoryDetailsComment = tmplStoryDetailsComment.replace(intlRelative, '');
   }
+  var storyDetails = document.createElement('section');
+  storyDetails.classList.add('story-details');
+  document.body.appendChild(storyDetails);
 
   var storyTemplate =
       Handlebars.compile(tmplStory);
@@ -54,12 +57,12 @@ APP.Main = (function() {
       Handlebars.compile(tmplStoryDetails);
   var storyDetailsCommentTemplate =
       Handlebars.compile(tmplStoryDetailsComment);
-  var storyTemplateHtml = storyTemplate({
+  /**var storyTemplateHtml = storyTemplate({
     title: '...',
     score: '-',
     by: '...',
     time: 0
-  });
+  });**/
 
   var commentTemplateHtml = storyDetailsCommentTemplate({
     by: '', text: 'Loading comment...'
@@ -96,13 +99,19 @@ function onStoryClick(details) {
       if (details.url)
         details.urlobj = new URL(details.url);
 
-      //var comment;
+      var comment;
       var commentsElement;
       var storyHeader;
       var storyContent;
 
       var storyDetailsHtml = storyDetailsTemplate(details);
       var kids = details.kids;
+      var commentHtml = storyDetailsCommentTemplate({
+        by: '', text: 'Loading comment...'
+      });
+
+      storyDetails.setAttribute('id', 'sd-' + details.id);
+
       storyDetails.innerHTML = storyDetailsHtml;
 
       commentsElement = storyDetails.querySelector('.js-comments');
@@ -118,37 +127,35 @@ function onStoryClick(details) {
       if (typeof kids === 'undefined')
         return;
 
-      var commentTemplateElement = document.createElement('aside');
-      commentTemplateElement.classList.add('story-details__comment');
-      commentTemplateElement.innerHTML = commentTemplateHtml;
+      //var commentTemplateElement = document.createElement('aside');
+      //commentTemplateElement.classList.add('story-details__comment');
+      //commentTemplateElement.innerHTML = commentTemplateHtml;
 
       for (var k = 0; k < kids.length; k++) {
 
-        var comment = commentTemplateElement.cloneNode(true);
-        comment.setAttribute('id', 'sdc-' + kids[k]);
+        //var comment = commentTemplateElement.cloneNode(true);
+        //comment.setAttribute('id', 'sdc-' + kids[k]);
 
-        requestAnimationFrame(function(commentsElement, comment) {
-          return function() {
-            commentsElement.appendChild(comment);
-          };
-        }(commentsElement, comment));
+        //requestAnimationFrame(function(commentsElement, comment) {
+          //return function() {
+            //commentsElement.appendChild(comment);
+          //};
+        //}(commentsElement, comment));
 
-        APP.Data.getStoryComment(kids[k], function(comment) {
-          return function (commentDetails) {
+        APP.Data.getStoryComment(kids[k], function(commentDetails) {
 
           commentDetails.time *= 1000;
 
-          var commentInnerHTML = storyDetailsCommentTemplate(
-              commentDetails,
-              localeData
-            );
-
-            requestAnimationFrame(function() {
-              comment.innerHTML = commentInnerHTML;
-            });
-          };}(comment));
-        }
-      }
+          var comment = commentsElement.querySelector(
+            '#sdc-' + commentDetails.id
+          );
+          comment.innerHTML = storyDetailsCommentTemplate(
+            commentDetails, localeData
+          );
+      });
+    }
+    showStory(details.id);
+  }
 
   function showStory(id) {
     if (!storyDetails)
