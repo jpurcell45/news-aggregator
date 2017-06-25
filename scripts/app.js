@@ -64,9 +64,9 @@ APP.Main = (function() {
     time: 0
   });**/
 
-  var commentTemplateHtml = storyDetailsCommentTemplate({
-    by: '', text: 'Loading comment...'
-  });
+  //var commentTemplateHtml = storyDetailsCommentTemplate({
+    //by: '', text: 'Loading comment...'
+  //});
 
   function onStoryData (key, details) {
 
