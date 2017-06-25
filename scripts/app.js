@@ -119,7 +119,7 @@ function onStoryClick(details) {
       storyContent = storyDetails.querySelector('.js-content');
 
       var closeButton = storyDetails.querySelector('.js-close');
-      closeButton.addEventListener('click', hideStory);
+      closeButton.addEventListener('click', hideStory.bind(this, details.id));
 
       var headerHeight = storyHeader.getBoundingClientRect().height;
       storyContent.style.paddingTop = headerHeight + 'px';
@@ -133,14 +133,11 @@ function onStoryClick(details) {
 
       for (var k = 0; k < kids.length; k++) {
 
-        //var comment = commentTemplateElement.cloneNode(true);
-        //comment.setAttribute('id', 'sdc-' + kids[k]);
-
-        //requestAnimationFrame(function(commentsElement, comment) {
-          //return function() {
-            //commentsElement.appendChild(comment);
-          //};
-        //}(commentsElement, comment));
+        comment = document.createElement('aside');
+        comment.setAttribute('id', 'sdc-', + kids[k]);
+        comment.classList.add('story-details__comment');
+        comment.innerHTML = commentHtml;
+        commentsElement.appendChild(comment);
 
         APP.Data.getStoryComment(kids[k], function(commentDetails) {
 
