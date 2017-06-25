@@ -32,7 +32,7 @@ APP.Main = (function() {
       }
     }
   };
-  var storyDetails = $('#storyDetails');
+  var storyDetails = $('#story-details');
   var tmplStory = $('#tmpl-story').textContent;
   var tmplStoryDetails = $('#tmpl-story-details').textContent;
   var tmplStoryDetailsComment = $('#tmpl-story-details-comment').textContent;
