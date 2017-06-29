@@ -287,7 +287,7 @@
      var loadThreshold = (main.scrollHeight - main.offsetHeight -
          LAZY_LOAD_THRESHOLD);
      if (main.scrollTop > loadThreshold)
-       loadStoryBatch();
+       requestAnimationFrame(loadStoryBatch);
    });
 
    function loadStoryBatch() {
